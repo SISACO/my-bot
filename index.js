@@ -213,8 +213,8 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
    else if (action == "SubstationChat") {
         for (let i = 0; i < SubstationChat.length; i++) {
             for (let j = 0; j < SubstationChat[i].questions[i].length; j++) {
-                if (similarQuestion == SubstationChat[i].questions[i][j]) {
-                    responseText =  _.sample(SubstationChat[i].answers[i][j]);
+                if (similarQuestion == SubstationChat[i].questions[j]) {
+                    responseText =  _.sample(SubstationChat[i].answers[j]);
                     
                 }
             }
