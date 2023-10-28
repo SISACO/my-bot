@@ -20,6 +20,7 @@ const serveStatic = require("serve-static");
 
 const pkg = require("./package.json");
 const mainChat = require("./intents/Main_Chat.json");
+const SubstationChat = require("./intents/SubStation.json");
 const supportChat = require("./intents/support.json");
 const wikipediaChat = require("./intents/wikipedia.json");
 const welcomeChat = require("./intents/Default_Welcome.json");
@@ -51,7 +52,10 @@ allQustions = _.concat(
   allQustions,
   _.flattenDeep(_.map(mainChat, "questions")),
 );
-
+allQustions = _.concat(
+  allQustions,
+  _.flattenDeep(_.map(SubstationChat, "questions")),
+);
 allQustions = _.uniq(allQustions);
 allQustions = _.compact(allQustions);
 
@@ -113,6 +117,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
     const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;      // Regular expressions to identify different types of queries
     const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
     const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
+    const regExforSubStation = /(substation|what are|requirements|how to fix|safety|control|explain)/gim;
 
     let similarQuestionObj;
 
@@ -135,13 +140,21 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         humanInput,
         _.flattenDeep(_.map(supportChat, "questions")),
       ).bestMatch;
-    } else {
+    } else if (regExforSubStation.test(humanInput)) {
+      action = "SubstationChat";
+      similarQuestionObj = stringSimilarity.findBestMatch(
+        humanInput,
+        _.flattenDeep(_.map(SubstationChat, "questions")),
+      ).bestMatch;
+    }
+    else {
       action = "main_chat";
       similarQuestionObj = stringSimilarity.findBestMatch(
         humanInput,
         _.flattenDeep(_.map(mainChat, "questions")),
       ).bestMatch;
     }
+
 
     const similarQuestionRating = similarQuestionObj.rating;    // Retrieve the rating and target question from the best matching question
     const similarQuestion = similarQuestionObj.target;
@@ -196,11 +209,25 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
           }
         }
       }
-    } else if (
+    }
+    else if (action == "SubstationChat") {
+      rating = similarQuestionRating;    // Retrieve an appropriate answer from the support chat data based on the similar question
+
+      if (similarQuestionRating > standardRating) {
+        for (let i = 0; i < SubstationChat.length; i++) {
+          for (let j = 0; j < SubstationChat[i].questions.length; j++) {
+            if (similarQuestion == SubstationChat[i].questions[j]) {
+              responseText = _.sample(SubstationChat[i].answers);
+            }
+          }
+        }
+      }
+    }
+   else if (
       /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)    // Greet the user with their provided name
     ) {
       const humanName = /(?:my name is|I'm|I am) (.{1,30})/gim.exec(humanInput);
-      responseText = `Nice to meet you ${humanName[1]}.`;
+      responseText = `I'm glad to know, ${humanName[1]}.`;
       rating = 1;
     } else {    // Handle general chat messages and fallback responses
       action = "main_chat";
