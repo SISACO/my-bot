@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
-const fs = require("fs"); // Importing the 'fs' module for file system operations.
-const _ = require("lodash"); // Importing the 'lodash' module for file system operations.
-const wiki = require("wikipedia");
-const convert = require("convert-units");
-const { lowerCase } = require("lower-case");
+const fs = require("fs");                              // Importing the 'fs' module for file system operations.
+const _ = require("lodash");                         // Importing the 'lodash' module for file system operations.
+const wiki = require("wikipedia");                  // Importing the 'wikipedia' module for accessing Wikipedia API.
+const convert = require("convert-units");          // Importing the 'convert-units' module for unit conversion functionalities.
+const { lowerCase } = require("lower-case");        
 const { capitalCase } = require("change-case");
 const extractValues = require("extract-values");
 const stringSimilarity = require("string-similarity");
@@ -26,17 +26,19 @@ const welcomeChat = require("./intents/Default_Welcome.json");
 const fallbackChat = require("./intents/Default_Fallback.json");
 const unitConverterChat = require("./intents/unit_converter.json");
 
-dotenv.config();
+dotenv.config();  // Load environment variables from .env file into process.env
 
-const standardRating = 0.6;
-const botName = process.env.BOT_NAME || pkg.name;
-const developerName = process.env.DEVELOPER_NAME || pkg.author.name;
-const developerEmail = process.env.DEVELOPER_EMAIL || pkg.author.email;
-const bugReportUrl = process.env.DEVELOPER_NAME || pkg.bugs.url;
+const standardRating = 0.6;  // Default standard rating for chatbot responses
+const botName = process.env.BOT_NAME || pkg.name;  // Retrieve bot name from environment variables or package.json
+const developerName = process.env.DEVELOPER_NAME || pkg.author.name;  // Retrieve developer name from environment variables or package.json
+const developerEmail = process.env.DEVELOPER_EMAIL || pkg.author.email;  // Retrieve developer email from environment variables or package.json
+const bugReportUrl = process.env.DEVELOPER_NAME || pkg.bugs.url;   // Retrieve bug report URL from environment variables or package.json
 
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express();    // Create an Express application
+const port = process.env.PORT || 3000;    // Set the port for the server, default to 3000 if not provided in environment variables
 
+
+/*Combine and deduplicate chat questions from different sources*/
 let allQustions = [];
 
 allQustions = _.concat(allQustions, wikipediaChat);
@@ -53,8 +55,8 @@ allQustions = _.concat(
 allQustions = _.uniq(allQustions);
 allQustions = _.compact(allQustions);
 
-const changeUnit = (amount, unitFrom, unitTo) => {
-  try {
+const changeUnit = (amount, unitFrom, unitTo) => {  // Function to convert units from one form to another
+  try {                                              // Try to perform the unit conversion, handle errors if any
     const convertValue = convert(amount).from(unitFrom).to(unitTo);
     const returnMsg = `${amount} ${convert().describe(unitFrom).plural}(${
       convert().describe(unitFrom).abbr
@@ -64,16 +66,16 @@ const changeUnit = (amount, unitFrom, unitTo) => {
 
     return returnMsg;
   } catch (error) {
-    return error.message;
+    return error.message;    // If there's an error during conversion, return the error message
   }
 };
 
-const sendAllQuestions = (req, res) => {
-  const humanQuestions = [];
-
-  try {
-    allQustions.forEach((qus) => {
-      if (qus.length >= 15) {
+const sendAllQuestions = (req, res) => {    // Function to handle sending all available questions
+  const humanQuestions = [];                // Array to store human-readable questions
+                                                
+  try {                                    
+    allQustions.forEach((qus) => {           // Process all questions, format them, and add them to the humanQuestions array
+      if (qus.length >= 15) {               // Ensure the question is of sufficient length for processing
         if (
           /^(can|are|may|how|what|when|who|do|where|your|from|is|will|why)/gi.test(
             qus,
@@ -85,20 +87,20 @@ const sendAllQuestions = (req, res) => {
         }
       }
     });
-    res.json(_.shuffle(humanQuestions));
+    res.json(_.shuffle(humanQuestions));      // Shuffle the formatted questions and send as a JSON response
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error!", code: 500 });
+    res.status(500).send({ error: "Internal Server Error!", code: 500 });    // If there's an error, send a 500 Internal Server Error response
     console.log(error);
   }
 };
 
-const sendWelcomeMessage = (req, res) => {
-  res.json({
+const sendWelcomeMessage = (req, res) => {      // Function to handle sending a welcome message
+  res.json({                                    // Send a random welcome message as a JSON response
     responseText: _.sample(welcomeChat),
   });
 };
 
-const sendAnswer = async (req, res) => {
+const sendAnswer = async (req, res) => {      // Function to handle sending answers based on user queries
   let isFallback = false;
   let responseText = null;
   let rating = 0;
