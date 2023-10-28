@@ -212,7 +212,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
     }
    else if (action == "SubstationChat") {
     // Find the index of the user's question in the questions array
-    const index = questions.indexOf(userQuestion);
+    const index = questions.indexOf(humanInput);
 
     if (index !== -1) {
         // If the user's question is found, return the corresponding answer
