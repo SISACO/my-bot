@@ -210,20 +210,19 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         }
       }
     }
-   else if (action == "SubstationChat") {
-    const matchingAnswers = [];
+    else if (action == "SubstationChat") {
+         // Retrieve an appropriate answer from the support chat data based on the similar question
 
-    for (let i = 0; i < SubstationChat.length; i++) {
-        for (let j = 0; j < SubstationChat[i].questions.length; j++) {
-            if (similarQuestion == SubstationChat[i].questions[j]) {
-                matchingAnswers.push(SubstationChat[i].answers[j]);
-
-                responseText = matchingAnswers;
+      
+        for (let i = 0; i < supportChat.length; i++) {
+          for (let j = 0; j < supportChat[i].questions.length; j++) {
+            if (similarQuestion == supportChat[i].questions[j]) {
+              responseText = _.sample(supportChat[i].answers);
             }
+          }
         }
+      
     }
-
-}
 
 
    else if (
