@@ -217,17 +217,12 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         for (let j = 0; j < SubstationChat[i].questions.length; j++) {
             if (similarQuestion == SubstationChat[i].questions[j]) {
                 matchingAnswers.push(SubstationChat[i].answers[j]);
+
+                responseText = matchingAnswers;
             }
         }
     }
 
-    if (matchingAnswers.length > 0) {
-        // Choose an answer randomly from matching answers with the same size
-        const matchingSizeAnswers = matchingAnswers.filter(answer => answer.length === matchingAnswers[0].length);
-        const selectedAnswer = _.sample(matchingSizeAnswers);
-
-        responseText = selectedAnswer;
-    }
 }
 
 
