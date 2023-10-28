@@ -211,14 +211,13 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
       }
     }
    else if (action == "SubstationChat") {
-     // Retrieve an appropriate answer from the support chat data based on the similar question
-
+    rating = similarQuestionRating; // Retrieve an appropriate answer from the support chat data based on the similar question
     if (similarQuestionRating > standardRating) {
-        for (let i = 0; i < questions.length; i++) {
-            for (let j = 0; j < questions[i].length; j++) {
-                if (similarQuestion == questions[i][j]) {
-                    responseText = answers[i][j];
-                    rating = similarQuestionRating;
+        for (let i = 0; i < SubstationChat.questions.length; i++) {
+            for (let j = 0; j < SubstationChat.questions[i].length; j++) {
+                if (similarQuestion == SubstationChat.questions[i][j]) {
+                    responseText = SubstationChat.answers[i][j];
+                    
                 }
             }
         }
