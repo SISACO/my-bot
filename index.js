@@ -211,14 +211,20 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
       }
     }
    else if (action == "SubstationChat") {
-    // Find the index of the user's question in the questions array
-    const index = questions.indexOf(humanInput);
+     // Retrieve an appropriate answer from the support chat data based on the similar question
 
-    if (index !== -1) {
-        // If the user's question is found, return the corresponding answer
-        responseText = answers[index];
+    if (similarQuestionRating > standardRating) {
+        for (let i = 0; i < questions.length; i++) {
+            for (let j = 0; j < questions[i].length; j++) {
+                if (similarQuestion == questions[i][j]) {
+                    responseText = answers[i][j];
+                    rating = similarQuestionRating;
+                }
+            }
+        }
     }
-    }
+}
+
    else if (
       /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)    // Greet the user with their provided name
     ) {
