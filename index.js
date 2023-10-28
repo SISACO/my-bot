@@ -204,7 +204,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         for (let i = 0; i < supportChat.length; i++) {
           for (let j = 0; j < supportChat[i].questions.length; j++) {
             if (similarQuestion == supportChat[i].questions[j]) {
-              responseText = _.sample(supportChat[i].answers);
+              responseText = _.sample(supportChat.answers[j]);
             }
           }
         }
