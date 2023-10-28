@@ -195,6 +195,37 @@
             "Regular checks ensure equipment is safe in a substation.",
             "Prevent unauthorized access to the substation computer."
         ]
-    }
-
+    },
+    {
+    "questions": [
+        "Can you provide some safety guidelines specific to working in a substation?",
+        "I need safety guidelines for working in a substation, can you help me with that?",
+        "Could you share substation-specific safety guidelines with me?",
+        "I'm looking for safety guidelines for substation work, any suggestions?",
+        "What are the safety guidelines I should follow when working in a substation?",
+        "Tell me about safety guidelines for substation workers, please.",
+        "I want to know the safety guidelines for substation environments, could you tell me?",
+        "Can you give me tips on staying safe while working in a substation?",
+        "I'm curious about safety guidelines for substation workers, could you enlighten me?",
+        "What are the essential safety rules everyone should be aware of when working in a substation?",
+        "I need advice on staying safe in a substation, can you provide some guidelines?",
+        "Could you please share substation-specific safety tips with me?",
+        "What precautions should I take for safety while working in a substation? Can you list them?",
+        "I'm looking for safety advice for substation work, do you have any guidelines to share?",
+        "What are the general safety guidelines people should follow when working in a substation?",
+        "Can you give me insights on safety measures everyone should know when working in a substation?",
+        "Tell me about safety guidelines that are important to follow in a substation.",
+        "Can you provide a comprehensive list of safety guidelines for substation workers?"
+    ],
+    "answers": [
+        "When working in a substation, always wear the appropriate personal protective equipment (PPE) such as safety helmets, gloves, and eye protection to minimize the risk of injuries from electrical equipment or falling objects.",
+        "Maintain a safe distance from live electrical equipment. Follow specified safety distances to avoid electric shocks or accidents. Use insulated tools and equipment to further reduce the risk.",
+        "Substation workers should undergo rigorous training to understand the layout, electrical configurations, and emergency procedures. Proper training ensures a swift and informed response to different situations, enhancing overall safety.",
+        "Regular equipment inspections and maintenance are vital in substations. Identifying and addressing issues promptly can prevent electrical failures and accidents, ensuring a safer working environment for everyone involved.",
+        "Understand and follow lockout/tagout procedures meticulously. This is essential to de-energize equipment, preventing unexpected startups and ensuring the safety of workers during maintenance or repair work.",
+        "Communication is key. Maintain clear communication among team members at all times. This includes using standardized signals, especially when heavy machinery or vehicles are in operation within the substation premises.",
+        "Familiarize yourself with emergency shutdown procedures, first aid protocols, and evacuation plans. Regular drills ensure everyone knows how to act swiftly during emergencies, enhancing overall safety.",
+        "Prioritize mental alertness. Adequate rest breaks, hydration, and minimizing distractions contribute to mental focus, ensuring workers can respond effectively to changing situations in a substation environment."
+    ]
+}
 ]
