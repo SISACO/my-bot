@@ -210,7 +210,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         }
       }
     }
-    else if (action == "SubstationChat") {
+  /*  else if (action == "SubstationChat") {
       rating = similarQuestionRating;    // Retrieve an appropriate answer from the support chat data based on the similar question
 
       if (similarQuestionRating > standardRating) {
@@ -222,7 +222,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
           }
         }
       }
-    }
+    }*/
    else if (
       /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)    // Greet the user with their provided name
     ) {
