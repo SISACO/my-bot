@@ -211,8 +211,6 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
       }
     }
    else if (action == "SubstationChat") {
-    rating = similarQuestionRating; // Retrieve an appropriate answer from the support chat data based on the similar question
-    if (similarQuestionRating > standardRating) {
         for (let i = 0; i < SubstationChat.length; i++) {
             for (let j = 0; j < SubstationChat[i].questions[i].length; j++) {
                 if (similarQuestion == SubstationChat[i].questions[i][j]) {
@@ -221,7 +219,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
                 }
             }
         }
-    }
+    
 }
 
    else if (
