@@ -117,7 +117,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
     const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;      // Regular expressions to identify different types of queries
     const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
     const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
-    const regExforSubStation = /(explain)/gim;
+    const regExforSubStation = /(control|explain)/gim;
 
     let similarQuestionObj;
 
@@ -204,7 +204,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         for (let i = 0; i < supportChat.length; i++) {
           for (let j = 0; j < supportChat[i].questions.length; j++) {
             if (similarQuestion == supportChat[i].questions[j]) {
-              responseText = _.sample(supportChat.answers[j]);
+              responseText = _.sample(supportChat[i].answers);
             }
           }
         }
@@ -214,7 +214,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         for (let i = 0; i < SubstationChat.length; i++) {
             for (let j = 0; j < SubstationChat[i].questions.length; j++) {
                 if (similarQuestion == SubstationChat[i].questions[j]) {
-                    responseText =  _.sample(SubstationChat[i].answers);
+                    responseText =  _.sample(SubstationChat.answers[j]);
                     
                 }
             }
