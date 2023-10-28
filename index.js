@@ -107,16 +107,17 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
   let action = null;
 
   try {
-    const query = decodeURIComponent(req.query.q).replace(/\s+/g, " ").trim() || "Hello";
-    const humanInput = lowerCase(query.replace(/(\?|\.|!)$/gim, ""));
+    const query = decodeURIComponent(req.query.q).replace(/\s+/g, " ").trim() || "Hello";    // Retrieve and clean user input from the query parameter
+    const humanInput = lowerCase(query.replace(/(\?|\.|!)$/gim, ""));    
 
-    const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;
+    const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;      // Regular expressions to identify different types of queries
     const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
     const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
 
     let similarQuestionObj;
 
-    if (regExforUnitConverter.test(humanInput)) {
+    // Determine the type of query using regular expressions and find the best matching question
+    if (regExforUnitConverter.test(humanInput)) {    
       action = "unit_converter";
       similarQuestionObj = stringSimilarity.findBestMatch(
         humanInput,
@@ -142,9 +143,10 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
       ).bestMatch;
     }
 
-    const similarQuestionRating = similarQuestionObj.rating;
+    const similarQuestionRating = similarQuestionObj.rating;    // Retrieve the rating and target question from the best matching question
     const similarQuestion = similarQuestionObj.target;
 
+    // Handle different types of queries and generate appropriate responses
     if (action == "unit_converter") {
       const valuesObj = extractValues(humanInput, similarQuestion, {
         delimiters: ["{", "}"],
@@ -171,6 +173,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         const wikipediaResponse = await wiki.summary(topic);
         const wikipediaResponseText = wikipediaResponse.extract;
 
+        // Handle empty Wikipedia responses
         if (wikipediaResponseText == undefined || wikipediaResponseText == "") {
           responseText = `Sorry, I can't find any article related to "${topic}".`;
           isFallback = true;
@@ -182,7 +185,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         console.log(error);
       }
     } else if (action == "support") {
-      rating = similarQuestionRating;
+      rating = similarQuestionRating;    // Retrieve an appropriate answer from the support chat data based on the similar question
 
       if (similarQuestionRating > standardRating) {
         for (let i = 0; i < supportChat.length; i++) {
@@ -194,12 +197,12 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         }
       }
     } else if (
-      /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)
+      /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)    // Greet the user with their provided name
     ) {
       const humanName = /(?:my name is|I'm|I am) (.{1,30})/gim.exec(humanInput);
       responseText = `Nice to meet you ${humanName[1]}.`;
       rating = 1;
-    } else {
+    } else {    // Handle general chat messages and fallback responses
       action = "main_chat";
 
       if (similarQuestionRating > standardRating) {
@@ -212,7 +215,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
           }
         }
       } else {
-        isFallback = true;
+        isFallback = true;    // Fallback response for unrecognized or low-confidence queries
         action = "Default_Fallback";
         if (
           humanInput.length >= 5
