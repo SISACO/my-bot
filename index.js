@@ -289,11 +289,12 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
 
 const notFound = async (req, res) => {
   try {
+    // Read the content of the 404 error page (assumed to be an HTML file)
     const pageNotFoundHtml = await fs.readFileSync(
       path.join(__dirname, "public/404.html"),
       "utf8",
     );
-    res.status(404).send(pageNotFoundHtml);
+    res.status(404).send(pageNotFoundHtml);    // Send the 404 response along with the content of the 404 error page
   } catch (err) {
     res.status(404).send("Page Not Found!");
     console.log(err);
