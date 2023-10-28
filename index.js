@@ -117,7 +117,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
     const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;      // Regular expressions to identify different types of queries
     const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
     const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
-    const regExforSubStation = /(substation|what are|requirements|how to fix|safety|control|explain)/gim;
+    const regExforSubStation = /(explain)/gim;
 
     let similarQuestionObj;
 
