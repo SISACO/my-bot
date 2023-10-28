@@ -3,11 +3,11 @@ const fs = require("fs");                              // Importing the 'fs' mod
 const _ = require("lodash");                         // Importing the 'lodash' module for file system operations.
 const wiki = require("wikipedia");                  // Importing the 'wikipedia' module for accessing Wikipedia API.
 const convert = require("convert-units");          // Importing the 'convert-units' module for unit conversion functionalities.
-const { lowerCase } = require("lower-case");        // Importing the 'lower-case' function from the 'lower-case' library.
-const { capitalCase } = require("change-case");      // Importing the 'capitalCase' function from the 'change-case' library.
-const extractValues = require("extract-values");        // Importing the 'extract-values' module for extracting values from strings using patterns.
-const stringSimilarity = require("string-similarity");  // Importing the 'string-similarity' module for comparing string similarity.
-const { upperCaseFirst } = require("upper-case-first");  // Importing the 'upperCaseFirst' function from the 'upper-case-first' library.
+const { lowerCase } = require("lower-case");        
+const { capitalCase } = require("change-case");
+const extractValues = require("extract-values");
+const stringSimilarity = require("string-similarity");
+const { upperCaseFirst } = require("upper-case-first");
 
 const cors = require("cors");
 const path = require("path");
@@ -217,7 +217,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
         for (let i = 0; i < SubstationChat.length; i++) {
           for (let j = 0; j < SubstationChat[i].questions.length; j++) {
             if (similarQuestion == SubstationChat[i].questions[j]) {
-              responseText = SubstationChat[i].answers;
+              responseText = SubstationChat[i].answers[j];
             }
           }
         }
