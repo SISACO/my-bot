@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PB2204/Sunday.git"
+    "url": "https://github.com/SISACO/my-bot.git"
   },
   "bugs": {
-    "url": "https://github.com/PB2204/Sunday/issues"
+    "url": "https://github.com/SISACO/my-bot/issues"
   },
   "scripts": {
     "dev": "nodemon -e js,json,less,css",
