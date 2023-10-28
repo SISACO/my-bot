@@ -117,7 +117,7 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
     const regExforUnitConverter = /(convert|change|in).{1,2}(\d{1,8})/gim;      // Regular expressions to identify different types of queries
     const regExforWikipedia = /(search for|tell me about|what is|who is)(?!.you) (.{1,30})/gim;
     const regExforSupport = /(invented|programmer|teacher|create|maker|who made|creator|developer|bug|email|report|problems)/gim;
-    const regExforSubStation = /(control|explain)/gim;
+    const regExforSubStation = /(substation|what are|requirements|how to fix|safety|control|explain)/gim;
 
     let similarQuestionObj;
 
@@ -211,16 +211,25 @@ const sendAnswer = async (req, res) => {      // Function to handle sending answ
       }
     }
    else if (action == "SubstationChat") {
-        for (let i = 0; i < SubstationChat.length; i++) {
-            for (let j = 0; j < SubstationChat[i].questions.length; j++) {
-                if (similarQuestion == SubstationChat[i].questions[j]) {
-                    responseText =  _.sample(SubstationChat[i].answers[j]);
-                    
-                }
+    const matchingAnswers = [];
+
+    for (let i = 0; i < SubstationChat.length; i++) {
+        for (let j = 0; j < SubstationChat[i].questions.length; j++) {
+            if (similarQuestion == SubstationChat[i].questions[j]) {
+                matchingAnswers.push(SubstationChat[i].answers[j]);
             }
         }
-    
+    }
+
+    if (matchingAnswers.length > 0) {
+        // Choose an answer randomly from matching answers with the same size
+        const matchingSizeAnswers = matchingAnswers.filter(answer => answer.length === matchingAnswers[0].length);
+        const selectedAnswer = _.sample(matchingSizeAnswers);
+
+        responseText = selectedAnswer;
+    }
 }
+
 
    else if (
       /(?:my name is|I'm|I am) (?!fine|good)(.{1,30})/gim.test(humanInput)    // Greet the user with their provided name
