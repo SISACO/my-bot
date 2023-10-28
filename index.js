@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-const fs = require("fs");
-const _ = require("lodash");
+const fs = require("fs"); // Importing the 'fs' module for file system operations.
+const _ = require("lodash"); // Importing the 'lodash' module for file system operations.
 const wiki = require("wikipedia");
 const convert = require("convert-units");
 const { lowerCase } = require("lower-case");
